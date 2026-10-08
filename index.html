@@ -689,6 +689,23 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
     drawStars();
+    
+const domainSection = document.getElementById("domain");
+
+const domainObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        domainSection.classList.add("gojo-visible");
+      } else {
+        domainSection.classList.remove("gojo-visible");
+      }
+    });
+  },
+  { threshold: 0.3 }
+);
+
+domainObserver.observe(domainSection);
   </script>
 </body>
 </html>
