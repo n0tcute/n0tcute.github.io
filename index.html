@@ -28,12 +28,20 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "DM Sans", sans-serif;
-      overflow-x: hidden;
-    }
+    
+body {
+  background-color: #05030d;
+  background-image:
+    linear-gradient(rgba(5, 3, 18, 0.35), rgba(5, 3, 18, 0.35)),
+    url("./c6e492c3-9a4a-4438-ae4d-da0e1e4613d4.png");
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
 
     a {
       color: inherit;
@@ -111,10 +119,12 @@
       color: var(--pink);
     }
 
-    section {
-      padding: 100px 8%;
-      scroll-margin-top: 65px;
-    }
+    
+section {
+  padding: 100px 8%;
+  scroll-margin-top: 65px;
+  background: transparent;
+}
 
     .hero {
       min-height: 100vh;
@@ -125,6 +135,7 @@
       text-align: center;
       position: relative;
       padding-top: 130px;
+      background: transparent;
     }
 
     .moon {
@@ -480,8 +491,7 @@
 
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
-  <div class="nebula one"></div>
-  <div class="nebula two"></div>
+
 
   <header>
     <a class="logo" href="#home">n0tcute ✦</a>
