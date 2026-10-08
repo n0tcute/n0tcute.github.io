@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090912">
+  <meta name="description" content="The personal corner of n0tcute — projects, edits, thoughts, and things in progress.">
+  <title>n0tcute — not cute. just me.</title>
+  <style>
+    :root {
+      --bg: #090912;
+      --panel: rgba(19, 19, 34, .78);
+      --panel-solid: #131322;
+      --text: #f3f0ff;
+      --muted: #aaa6c2;
+      --purple: #a78bfa;
+      --pink: #f0abfc;
+      --line: rgba(193, 174, 255, .18);
+      --glow: rgba(167, 139, 250, .18);
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6; overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 75% 10%, rgba(113, 67, 180, .18), transparent 34rem),
+        radial-gradient(ellipse at 5% 48%, rgba(75, 53, 144, .12), transparent 28rem);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    ::selection { background: #b89bff; color: #090912; }
+    .noise {
+      pointer-events: none; position: fixed; inset: 0; z-index: 10; opacity: .12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+    }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px);
+      background: rgba(9, 9, 18, .76); border-bottom: 1px solid var(--line);
+    }
+    nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-weight: 900; letter-spacing: -.06em; font-size: 1.45rem; }
+    .brand span { color: var(--pink); }
+    .navlinks { display: flex; align-items: center; gap: 25px; color: var(--muted); font-size: .9rem; }
+    .navlinks a:hover, .navlinks a:focus-visible { color: var(--text); }
+    .nav-cta { color: var(--text) !important; padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px; }
+    .menu-btn { display: none; color: var(--text); border: 1px solid var(--line); background: var(--panel); padding: 8px 12px; border-radius: 10px; }
+    .hero { min-height: 680px; display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 40px; padding-block: 78px 100px; }
+    .eyebrow { display: inline-flex; gap: 9px; align-items: center; color: var(--pink); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 800; }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: #c4b5fd; box-shadow: 0 0 16px #a78bfa; }
+    h1 { font-size: clamp(3.8rem, 8.7vw, 7.7rem); line-height: .88; letter-spacing: -.09em; margin: 25px 0 25px; }
+    h1 .outline { color: transparent; -webkit-text-stroke: 1.4px #c4b5fd; }
+    .hero p { max-width: 530px; color: var(--muted); font-size: 1.08rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; border: 1px solid var(--line); padding: 12px 18px; border-radius: 12px; font-weight: 750; font-size: .92rem; transition: transform .2s, box-shadow .2s, border-color .2s; cursor: pointer; }
+    .btn:hover { transform: translateY(-3px); border-color: rgba(240,171,252,.55); box-shadow: 0 12px 32px var(--glow); }
+    .btn.primary { background: linear-gradient(120deg, #c4b5fd, #f0abfc); color: #171023; border: 0; }
+    .hero-art { min-height: 450px; position: relative; display: grid; place-items: center; isolation: isolate; }
+    .orbit { position: absolute; width: min(100%, 430px); aspect-ratio: 1; border: 1px solid rgba(196,181,253,.2); border-radius: 50%; transform: rotate(-20deg); }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border: 1px solid rgba(240,171,252,.19); border-radius: 50%; inset: 28px -12px; transform: rotate(50deg); }
+    .orbit:after { inset: 68px 5px; transform: rotate(-30deg); }
+    .moon { position: absolute; width: 185px; height: 185px; border-radius: 50%; top: 55px; right: 25px; background: radial-gradient(circle at 30% 25%, #f5d0fe, #a78bfa 38%, #44316e 68%, transparent 70%); opacity: .9; filter: drop-shadow(0 0 45px rgba(167,139,250,.4)); }
+    .character-card { position: relative; width: min(82%, 330px); aspect-ratio: .76; border: 1px solid rgba(220,210,255,.25); border-radius: 48% 48% 24px 24px; overflow: hidden; background: linear-gradient(155deg, rgba(167,139,250,.22), rgba(22,17,42,.9) 56%, rgba(240,171,252,.13)); box-shadow: 0 25px 90px rgba(0,0,0,.35), inset 0 0 60px rgba(167,139,250,.12); }
+    .character-card:before { content: ""; position: absolute; width: 170px; height: 210px; left: 50%; top: 42px; transform: translateX(-50%); border-radius: 48% 48% 40% 40%; background: linear-gradient(110deg, #181323 8%, #40305e 50%, #15111f 80%); box-shadow: 0 -15px 0 12px #181323; }
+    .character-card:after { content: ""; position: absolute; left: 50%; top: 125px; transform: translateX(-50%); width: 115px; height: 18px; background: linear-gradient(90deg, transparent, #d8b4fe 20%, #f5d0fe 50%, #d8b4fe 80%, transparent); filter: blur(4px); opacity: .8; }
+    .cloak { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); width: 270px; height: 220px; border-radius: 48% 48% 0 0; background: linear-gradient(130deg, #30204c, #0b0a14 70%); border: 1px solid rgba(196,181,253,.25); }
+    .art-label { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); font-size: .7rem; letter-spacing: .25em; color: #e9ddff; white-space: nowrap; }
+    .floating-tag { position: absolute; padding: 10px 13px; background: rgba(14,13,27,.85); border: 1px solid var(--line); border-radius: 12px; color: #d8ccff; font-size: .76rem; box-shadow: 0 10px 35px rgba(0,0,0,.22); backdrop-filter: blur(10px); }
+    .tag-one { top: 95px; left: 0; transform: rotate(-7deg); } .tag-two { bottom: 78px; right: -3px; transform: rotate(5deg); }
+    .scroll-note { display: flex; gap: 12px; align-items: center; color: #7e7898; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+    .scroll-note:before { content: ""; width: 42px; height: 1px; background: var(--purple); }
+    section { padding-block: 82px; scroll-margin-top: 76px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 25px; margin-bottom: 30px; }
+    .kicker { color: var(--pink); text-transform: uppercase; letter-spacing: .17em; font-size: .72rem; font-weight: 800; }
+    h2 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1; letter-spacing: -.06em; margin: 10px 0 0; }
+    .section-head p { max-width: 430px; color: var(--muted); margin: 0; font-size: .93rem; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); transition: transform .22s, border-color .22s; }
+    .card:hover { transform: translateY(-5px); border-color: rgba(196,181,253,.45); }
+    .project-art { height: 190px; position: relative; overflow: hidden; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 80%, rgba(167,139,250,.32), transparent 55%), linear-gradient(135deg, #201735, #10101c); }
+    .project-art:before { content: ""; width: 130px; height: 130px; border: 1px solid rgba(240,171,252,.55); border-radius: 50%; box-shadow: 0 0 0 18px rgba(167,139,250,.06), 0 0 0 38px rgba(167,139,250,.04); }
+    .project-art span { position: absolute; font-size: 2rem; filter: drop-shadow(0 0 18px rgba(240,171,252,.7)); }
+    .art-two { background: radial-gradient(ellipse at 50% 70%, rgba(251,146,60,.2), transparent 55%), linear-gradient(135deg, #24172b, #10101c); }
+    .art-two:before { border-radius: 18px; transform: rotate(45deg); border-color: rgba(251,191,36,.6); }
+    .art-three { background: radial-gradient(ellipse at 50% 70%, rgba(45,212,191,.18), transparent 55%), linear-gradient(135deg, #14232e, #10101c); }
+    .art-three:before { border-radius: 50% 50% 10% 10%; border-color: rgba(94,234,212,.6); }
+    .card-body { padding: 20px; }
+    .meta { display: flex; gap: 9px; align-items: center; color: var(--pink); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; }
+    h3 { margin: 9px 0 7px; font-size: 1.15rem; letter-spacing: -.025em; }
+    .card p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .text-link { display: inline-block; margin-top: 17px; color: #d8b4fe; font-size: .86rem; font-weight: 750; }
+    .text-link:hover { color: white; }
+    .about-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 45px; align-items: start; }
+    .about-stamp { min-height: 300px; border-radius: 22px; border: 1px solid var(--line); background: linear-gradient(145deg, rgba(167,139,250,.16), rgba(19,19,34,.65)); display: grid; place-items: center; position: relative; overflow: hidden; }
+    .about-stamp:before { content: "N"; font-size: 15rem; font-weight: 950; letter-spacing: -.12em; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(216,180,254,.7); text-shadow: 0 0 60px rgba(167,139,250,.22); }
+    .stamp-caption { position: absolute; bottom: 20px; left: 22px; color: var(--muted); font-size: .7rem; letter-spacing: .2em; }
+    .about-copy p { color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .chip { padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); color: #d8ccff; font-size: .78rem; background: rgba(167,139,250,.06); }
+    .blog-list { display: grid; gap: 12px; }
+    .blog-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 20px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); transition: border-color .2s, transform .2s; }
+    .blog-row:hover { border-color: rgba(196,181,253,.4); transform: translateX(4px); }
+    .blog-date { color: var(--pink); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+    .blog-row h3 { margin: 0 0 5px; }
+    .blog-row p { color: var(--muted); font-size: .87rem; margin: 0; }
+    .arrow { color: var(--purple); font-size: 1.3rem; }
+    .contact-box { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: clamp(25px, 5vw, 52px); border: 1px solid rgba(196,181,253,.28); border-radius: 24px; background: radial-gradient(ellipse at 90% 10%, rgba(167,139,250,.2), transparent 45%), var(--panel); }
+    .contact-box p { max-width: 500px; color: var(--muted); margin-bottom: 0; }
+    footer { padding: 30px 0 42px; border-top: 1px solid var(--line); color: #77728f; font-size: .8rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer-links { display: flex; gap: 17px; }
+    .footer-links a:hover { color: var(--text); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .cursor-glow { position: fixed; width: 230px; height: 230px; border-radius: 50%; pointer-events: none; z-index: -1; background: rgba(167,139,250,.045); filter: blur(35px); transform: translate(-50%,-50%); }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; padding-top: 60px; gap: 10px; }
+      .hero-art { min-height: 390px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .grid .card:last-child { grid-column: 1 / -1; }
+      .about-grid { grid-template-columns: 1fr; gap: 25px; }
+      .about-stamp { min-height: 230px; }
+      .about-stamp:before { font-size: 11rem; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      nav { min-height: 64px; }
+      .menu-btn { display: block; }
+      .navlinks { display: none; position: absolute; top: 63px; left: 0; right: 0; padding: 20px; background: #0e0d1a; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 15px; }
+      .navlinks.open { display: flex; }
+      .nav-cta { text-align: center; }
+      .hero { min-height: auto; padding-block: 68px 55px; }
+      h1 { font-size: clamp(3.5rem, 18vw, 5.5rem); }
+      .hero p { font-size: 1rem; }
+      .hero-art { min-height: 350px; }
+      .moon { width: 140px; height: 140px; top: 35px; right: 5px; }
+      .character-card { width: 72%; }
+      .tag-one { left: -4px; top: 70px; } .tag-two { right: -4px; bottom: 55px; }
+      section { padding-block: 60px; }
+      .grid { grid-template-columns: 1fr; }
+      .grid .card:last-child { grid-column: auto; }
+      .project-art { height: 170px; }
+      .blog-row { grid-template-columns: 1fr auto; gap: 8px 15px; }
+      .blog-date { grid-column: 1 / -1; }
+      .contact-box { align-items: start; flex-direction: column; }
+      .footer-inner { flex-direction: column; align-items: start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <header class="topbar">
+    <nav class="wrap" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="n0tcute home">n0t<span>cute</span>.</a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navlinks">Menu ☰</button>
+      <div class="navlinks" id="navlinks">
+        <a href="#work">Work</a><a href="#about">About</a><a href="#journal">Journal</a><a class="nav-cta" href="#contact">Say hello ↗</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> Personal site · in progress</div>
+        <h1>NOT<br><span class="outline">CUTE.</span></h1>
+        <p>Just a human collecting ideas, creating things, and figuring it all out. This is my little corner of the internet.</p>
+        <div class="actions">
+          <a class="btn primary" href="#work">Explore my world <span aria-hidden="true">↘</span></a>
+          <a class="btn" href="#about">Who am I?</a>
+        </div>
+        <div class="scroll-note" style="margin-top:42px">Scroll to enter the story</div>
+      </div>
+      <div class="hero-art" aria-label="Original abstract anime-inspired night character artwork">
+        <div class="orbit"></div><div class="moon"></div>
+        <div class="character-card"><div class="cloak"></div><div class="art-label">UNKNOWN / 001</div></div>
+        <div class="floating-tag tag-one">✦ main character energy</div>
+        <div class="floating-tag tag-two">status: evolving.exe</div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">01 / Selected work</div><h2>Things I've made.</h2></div>
+          <p>A home for edits, experiments, and projects. These are starter cards—replace them with your real work as you create it.</p>
+        </div>
+        <div class="grid">
+          <article class="card reveal">
+            <div class="project-art"><span>✦</span></div>
+            <div class="card-body"><div class="meta">01 · Video</div><h3>Anime-style edits</h3><p>Short edits, transitions, timing, and experiments with sound.</p><a class="text-link" href="#contact">Add a project link ↗</a></div>
+          </article>
+          <article class="card reveal">
+            <div class="project-art art-two"><span>◈</span></div>
+            <div class="card-body"><div class="meta">02 · Gaming</div><h3>Gaming projects</h3><p>Highlights, thumbnails, and creative ideas from the games I play.</p><a class="text-link" href="#contact">Add a project link ↗</a></div>
+          </article>
+          <article class="card reveal">
+            <div class="project-art art-three"><span>⌘</span></div>
+            <div class="card-body"><div class="meta">03 · Experiments</div><h3>Digital playground</h3><p>Little web experiments and things I'm learning along the way.</p><a class="text-link" href="#contact">Add a project link ↗</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap about-grid">
+        <div class="about-stamp reveal"><div class="stamp-caption">N0TCUTE / PERSONAL LOG</div></div>
+        <div class="about-copy reveal">
+          <div class="kicker">02 / The person behind the pixels</div>
+          <h2>Still becoming.</h2>
+          <p>I'm a curious person who likes anime, gaming, creative projects, and learning how things work. I'm building this site one step at a time—no perfect origin story, just progress.</p>
+          <p>Think of this page as a living archive: things I make, things I learn, and thoughts worth keeping.</p>
+          <div class="chips"><span class="chip">Anime</span><span class="chip">Video editing</span><span class="chip">Gaming</span><span class="chip">Learning to code</span><span class="chip">Late-night ideas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">03 / Field notes</div><h2>From the journal.</h2></div>
+          <p>Small thoughts now. Longer posts later. The journal can grow whenever you have something to say.</p>
+        </div>
+        <div class="blog-list">
+          <a class="blog-row reveal" href="#contact"><div class="blog-date">Entry 001</div><div><h3>Why I'm building my own corner of the internet</h3><p>A place to collect projects, thoughts, and the things I'm learning.</p></div><span class="arrow">↗</span></a>
+          <a class="blog-row reveal" href="#contact"><div class="blog-date">Entry 002</div><div><h3>Learning in public, one project at a time</h3><p>Progress doesn't need to look perfect to be worth sharing.</p></div><span class="arrow">↗</span></a>
+          <a class="blog-row reveal" href="#contact"><div class="blog-date">Entry 003</div><div><h3>More soon...</h3><p>This space is waiting for your first real post.</p></div><span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-box reveal">
+          <div><div class="kicker">04 / Transmission</div><h2>Let's make something.</h2><p>Got a project, an idea, or just want to say hi? Add your real contact or social link to the button when you're ready.</p></div>
+          <a class="btn primary" href="mailto:hello@example.com" id="contactLink">Contact me ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><a class="brand" href="#home">n0t<span>cute</span>.</a><span>Built slowly, with intent. © <span id="year"></span> n0tcute</span><div class="footer-links"><a href="#work">Work</a><a href="#journal">Journal</a><a href="#home">Back to top ↑</a></div></div></footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navlinks = document.getElementById('navlinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navlinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.textContent = open ? 'Close ✕' : 'Menu ☰';
+    });
+    navlinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navlinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = 'Menu ☰';
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const glow = document.getElementById('cursorGlow');
+    window.addEventListener('pointermove', event => {
+      glow.style.left = event.clientX + 'px';
+      glow.style.top = event.clientY + 'px';
+    }, { passive: true });
+  </script>
+</body>
+</html>
